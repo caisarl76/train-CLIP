@@ -22,7 +22,7 @@ def main(hparams):
 
 if __name__ == '__main__':
     parser = ArgumentParser()
-    parser.add_argument('--model_name', type=str, required=True)
+    parser.add_argument('--model_name', type=str, default='RN50')
     parser.add_argument('--minibatch_size', type=int, default=0)
     parser = TextImageDataModule.add_argparse_args(parser)
     parser = Trainer.add_argparse_args(parser)
