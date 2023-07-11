@@ -13,11 +13,7 @@ import torch.multiprocessing as mp
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.cuda.amp import GradScaler, autocast
 from torch.utils.data.distributed import DistributedSampler 
-from torchvision import datasets, transforms
-from transformers import CLIPProcessor, CLIPModel, AutoTokenizer, AutoModelForCausalLM, CLIPConfig
-import albumentations as A
-from pycocotools.coco import COCO
-from PIL import Image
+from transformers import CLIPModel, AutoTokenizer
 
 from data.custom_data import *
 
@@ -136,7 +132,7 @@ def run_training(gpu, ngpus_per_node, args):
         total_loss = 0.0
         sampler.set_epoch(epoch)
         for batch, inputs in enumerate(train_loader):
-            inputs = {k:v.to('cuda:1') for k, v in inputs.items()}
+            inputs = {k:v.to(device) for k, v in inputs.items()}
             optimizer.zero_grad()
             # Preprocess images
             with autocast():
